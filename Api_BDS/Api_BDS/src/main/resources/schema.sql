@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS ALUMNO;
+DROP TABLE IF EXISTS Cliente;
 
 CREATE TABLE Cliente (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -7,8 +7,8 @@ CREATE TABLE Cliente (
     dni VARCHAR(9),
     CaducidadDni DATE,
     FechaNacimiento DATE,
-    Telefono INT(9),
-    Nacionalidad  VARCHAR(30),
+    Telefono VARCHAR(9),
+    Nacionalidad VARCHAR(30),
     seguro CHAR(1),
     correo VARCHAR(20)
 );
