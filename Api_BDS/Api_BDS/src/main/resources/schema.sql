@@ -7,7 +7,7 @@ CREATE TABLE Cliente (
     dni VARCHAR(9),
     CaducidadDni DATE,
     FechaNacimiento DATE,
-    Telefono VARCHAR(9),
+    Telefono TINYINT,
     Nacionalidad VARCHAR(30),
     seguro CHAR(1),
     correo VARCHAR(20)
