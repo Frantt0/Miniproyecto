@@ -11,10 +11,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/Cliente")
 public class ClienteController {
-    private final ClienteRepository ClienteRepository;
+    private final ClienteRepository clienteRepository;
 
-    public ClienteController(ClienteRepository ClienteRepository) {
-        this.ClienteRepository = ClienteRepository;
+    public ClienteController(ClienteRepository clienteRepository) {
+        this.clienteRepository = clienteRepository;
     }
 
     // Listar todos los Clientes
@@ -31,27 +31,27 @@ public class ClienteController {
 
         var pageable = org.springframework.data.domain.PageRequest.of(page, size, sort);
 
-        return ClienteRepository.findAll(pageable).getContent();
+        return clienteRepository.findAll(pageable).getContent();
     }
     // Para añadir el nombre la url sera como  http://localhost:8080/api/Cliente/buscar?nombre=Ana
 
     // Crear un nuevo Cliente CON EL POST EN POSTMAN
     @PostMapping
     public Cliente createCliente(@RequestBody Cliente Cliente) {
-        return ClienteRepository.save(Cliente);
+        return clienteRepository.save(Cliente);
     }
 
     // Obtener un Cliente por ID //TODO A TRAVES DE POSTMAN
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> getClienteById(@PathVariable int id) {
-        Optional<Cliente> Cliente = ClienteRepository.findById(id);
+        Optional<Cliente> Cliente = clienteRepository.findById(id);
         return Cliente.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // Actualizar un Cliente A TRAVES DE POSTMAN
     @PutMapping("/{id}")
     public ResponseEntity<Cliente> updateCliente(@PathVariable int id, @RequestBody Cliente updatedCliente) {
-        return ClienteRepository.findById(id)
+        return clienteRepository.findById(id)
                 .map(Cliente -> {
                     Cliente.setNombre(updatedCliente.getNombre());
                     Cliente.setApellidos(updatedCliente.getApellidos());
@@ -62,7 +62,7 @@ public class ClienteController {
                     Cliente.setNacionalidad(updatedCliente.getNacionalidad());
                     Cliente.setSeguro(updatedCliente.getSeguro());
                     Cliente.setCorreo(updatedCliente.getCorreo());
-                    ClienteRepository.save(Cliente);
+                    clienteRepository.save(Cliente);
                     return ResponseEntity.ok(Cliente);
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -71,9 +71,9 @@ public class ClienteController {
     // Borrar un Cliente
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCliente(@PathVariable int id) {
-        Optional<Cliente> Cliente = ClienteRepository.findById(id);
+        Optional<Cliente> Cliente = clienteRepository.findById(id);
         if (Cliente.isPresent()) {
-            ClienteRepository.delete(Cliente.get());
+            clienteRepository.delete(Cliente.get());
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
