@@ -7,34 +7,35 @@ import java.sql.Date;
 @Entity
 @Table(name = "Cliente")
 public class Cliente {
-
+    //CLASE CLIENTE CON TODOS LOS ATRIBUTOS QUE VA TENER
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nombre;
     private String apellidos;
     private String dni;
-    private Date CaducidadDni;
-    private Date FechaNacimiento;
-    private int  telefono;
+    private Date caducidadDni;
+    private Date fechaNacimiento;
+    private int telefono;
     private String nacionalidad;
     private char seguro;
     private String correo;
 
     public Cliente() {}
-
+    // LA INFORMACIÓN QUE POSEE EL CLIENTE
     public Cliente(String nombre, String apellidos, String dni, Date CaducidadDni, Date FechaNacimiento, int telefono, String nacionalidad, char seguro, String correo) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.dni = dni;
-        this.CaducidadDni = CaducidadDni;
-        this.FechaNacimiento = FechaNacimiento;
+        this.caducidadDni = CaducidadDni;
+        this.fechaNacimiento = FechaNacimiento;
         this.telefono = telefono;
         this.nacionalidad = nacionalidad;
         this.seguro = seguro;
         this.correo = correo;
     }
 
+    //GETTER Y SETTER DE TODAS LAS VARIABLES
     public int getId(){
         return id;
     }
@@ -56,11 +57,11 @@ public class Cliente {
     public String getDni(){return dni; }
     public void setDni(String dni){this.dni = dni; }
 
-    public Date getCaducidadDni(){return CaducidadDni; }
-    public void setCaducidadDni(Date CaducidadDni){this.CaducidadDni = CaducidadDni; }
+    public Date getCaducidadDni(){return caducidadDni; }
+    public void setCaducidadDni(Date CaducidadDni){this.caducidadDni = CaducidadDni; }
 
-    public Date getFechaNacimiento(){return FechaNacimiento; }
-    public void setFechaNacimiento(Date FechaNacimiento){this.FechaNacimiento = FechaNacimiento; }
+    public Date getFechaNacimiento(){return fechaNacimiento; }
+    public void setFechaNacimiento(Date FechaNacimiento){this.fechaNacimiento = FechaNacimiento; }
 
     public int getTelefono(){return telefono; }
     public void setTelefono(int telefono){this.telefono = telefono; }

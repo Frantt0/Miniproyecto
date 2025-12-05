@@ -35,20 +35,20 @@ public class ClienteController {
     }
     // Para añadir el nombre la url sera como  http://localhost:8080/api/Cliente/buscar?nombre=Ana
 
-    // Crear un nuevo Cliente
+    // Crear un nuevo Cliente CON EL POST EN POSTMAN
     @PostMapping
     public Cliente createCliente(@RequestBody Cliente Cliente) {
         return ClienteRepository.save(Cliente);
     }
 
-    // Obtener un Cliente por ID
+    // Obtener un Cliente por ID //TODO A TRAVES DE POSTMAN
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> getClienteById(@PathVariable int id) {
         Optional<Cliente> Cliente = ClienteRepository.findById(id);
         return Cliente.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Actualizar un Cliente
+    // Actualizar un Cliente A TRAVES DE POSTMAN
     @PutMapping("/{id}")
     public ResponseEntity<Cliente> updateCliente(@PathVariable int id, @RequestBody Cliente updatedCliente) {
         return ClienteRepository.findById(id)
