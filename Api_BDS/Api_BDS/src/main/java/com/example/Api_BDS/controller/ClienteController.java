@@ -1,20 +1,16 @@
 package com.example.Api_BDS.controller;
 
+import com.example.Api_BDS.entity.Cliente;
+import com.example.Api_BDS.repository.ClienteRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/Cliente")
 public class ClienteController {
-
-    private final ClienteController ClienteService;
-
-    public ClienteController(ClienteService ClienteService) {
-        this.ClienteService = ClienteService;
-    }
-    
     private final ClienteRepository ClienteRepository;
 
     public ClienteController(ClienteRepository ClienteRepository) {
@@ -24,10 +20,10 @@ public class ClienteController {
     // Listar todos los Clientes
     @GetMapping
     public List<Cliente> getClientes( // Permite obtener los valores desde ascendente y descendete
-            @RequestParam(defaultValue = "0") int page, //paginas
-            @RequestParam(defaultValue = "5") int size, // tamaño de la ordenación
-            @RequestParam(defaultValue = "id") String sortBy, // lo hace desde la id
-            @RequestParam(defaultValue = "asc") String direction // en orden ascendente
+                                      @RequestParam(defaultValue = "0") int page, //paginas
+                                      @RequestParam(defaultValue = "5") int size, // tamaño de la ordenación
+                                      @RequestParam(defaultValue = "id") String sortBy, // lo hace desde la id
+                                      @RequestParam(defaultValue = "asc") String direction // en orden ascendente
     ) {
         var sort = direction.equalsIgnoreCase("asc") ?
                 org.springframework.data.domain.Sort.by(sortBy).ascending() :
@@ -38,15 +34,7 @@ public class ClienteController {
         return ClienteRepository.findAll(pageable).getContent();
     }
     // Para añadir el nombre la url sera como  http://localhost:8080/api/Cliente/buscar?nombre=Ana
-    @GetMapping("/buscar")
-    public List<Cliente> buscar(@RequestParam String nombre) {
-        return ClienteRepository.findByNombreContaining(nombre);
-    }
-    //Buscar por mayores de edad CON EL PATH VARIABLE ES ENTRE CORCHETES http://localhost:8080/api/Cliente/mayores/20
-    @GetMapping("/mayores/{edad}")
-    public List<Cliente> obtenerMayores(@PathVariable int edad) {
-        return ClienteRepository.buscarMayores(edad);
-    }
+
     // Crear un nuevo Cliente
     @PostMapping
     public Cliente createCliente(@RequestBody Cliente Cliente) {
@@ -66,7 +54,14 @@ public class ClienteController {
         return ClienteRepository.findById(id)
                 .map(Cliente -> {
                     Cliente.setNombre(updatedCliente.getNombre());
-                    Cliente.setEdad(updatedCliente.getEdad());
+                    Cliente.setApellidos(updatedCliente.getApellidos());
+                    Cliente.setDni(updatedCliente.getDni());
+                    Cliente.setCaducidadDni(updatedCliente.getCaducidadDni());
+                    Cliente.setFechaNacimiento(updatedCliente.getFechaNacimiento());
+                    Cliente.setTelefono(updatedCliente.getTelefono());
+                    Cliente.setNacionalidad(updatedCliente.getNacionalidad());
+                    Cliente.setSeguro(updatedCliente.getSeguro());
+                    Cliente.setCorreo(updatedCliente.getCorreo());
                     ClienteRepository.save(Cliente);
                     return ResponseEntity.ok(Cliente);
                 })
@@ -86,4 +81,4 @@ public class ClienteController {
 
     
 }
-
+}
