@@ -9,7 +9,7 @@ CREATE TABLE Cliente (
     FechaNacimiento DATE,
     Telefono INT,
     Nacionalidad VARCHAR(30),
-    seguro CHAR(1),
+    seguro VARCHAR(2),
     correo VARCHAR(20)
 );
 

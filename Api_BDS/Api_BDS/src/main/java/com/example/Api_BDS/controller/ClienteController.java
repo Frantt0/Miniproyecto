@@ -33,7 +33,24 @@ public class ClienteController {
 
         return clienteRepository.findAll(pageable).getContent();
     }
-    // Para añadir el nombre la url sera como  http://localhost:8080/api/Cliente/buscar?nombre=Ana
+
+    // Obtener un Cliente por ID TODO A TRAVES DE POSTMAN
+    @GetMapping("/{id}")
+    public ResponseEntity<Cliente> getClienteById(@PathVariable int id) {
+        Optional<Cliente> Cliente = clienteRepository.findById(id);
+        return Cliente.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    // Para añadir el nombre la url sera como  http://localhost:8080/api/Cliente/BNacionalidad?nacionalidad=Española
+    @GetMapping("/BNacionalidad")
+    public List<Cliente> buscarPorNacionalidad(@RequestParam String nacionalidad) {
+        return clienteRepository.findByNacionalidadContaining(nacionalidad);
+    }
+
+    @GetMapping("/BSeguro") // PARA QUE NO SE REPITA EL BUSCAR SOLO HACE FALTA CAMBIAR EL NOMBRE DEL METODO
+    public List<Cliente> buscarPorSeguro(@RequestParam String seguro) {
+        return clienteRepository.findByNacionalidadContaining(seguro);
+    }
 
     // Crear un nuevo Cliente CON EL POST EN POSTMAN
     @PostMapping
@@ -41,12 +58,7 @@ public class ClienteController {
         return clienteRepository.save(Cliente);
     }
 
-    // Obtener un Cliente por ID //TODO A TRAVES DE POSTMAN
-    @GetMapping("/{id}")
-    public ResponseEntity<Cliente> getClienteById(@PathVariable int id) {
-        Optional<Cliente> Cliente = clienteRepository.findById(id);
-        return Cliente.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
+
 
     // Actualizar un Cliente A TRAVES DE POSTMAN
     @PutMapping("/{id}")
